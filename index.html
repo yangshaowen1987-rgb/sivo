@@ -10,6 +10,8 @@
     --btn:#111; --tag:#666;
   }
   *{box-sizing:border-box;margin:0;padding:0}
+  /* 关键：竖向滚动条常驻，页面可用宽度恒定；切换分类内容变长变短都不再左右跳动 */
+  html{overflow-y:scroll;scrollbar-gutter:stable}
   body{background:#fff;color:var(--ink);line-height:1.5;overflow-x:clip;
     font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;
     -webkit-font-smoothing:antialiased}
