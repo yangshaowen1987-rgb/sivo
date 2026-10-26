@@ -38,10 +38,8 @@
       { "title": "宏观趋势", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "商业系统", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "AI 最新发展", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
-      { "title": "AI 全链路跑", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
-      { "title": "直播分析手册", "type": "doc", "permission": "view", "file": "资料/live-analysis-handbook.pdf", "desc": "学习手册 PDF" }
+      { "title": "AI 全流程重塑与打通", "type": "link", "permission": "view", "file": "", "desc": "待补充" }
     ]},
-    { "name": "赋能体系", "items": [] },
     { "name": "联系我们", "items": [
       { "title": "联系方式", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/", "desc": "手机/微信 18818011293、15076535358 · 邮箱 yaoyaofly23@163.com · 公众号「上海活力组织研究院」· 地址 上海市松江区时尚谷产业园2号楼2层" }
     ]}
