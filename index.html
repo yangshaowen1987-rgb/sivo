@@ -126,12 +126,12 @@ function makeRow(it,isChild,cat){
     ? `<a class="title" href="${it.file}" target="_blank" rel="noopener">${it.title||"未命名"}</a>`
     : `<span class="title">${it.title||"未命名"}</span>`;
   let right;
-  if(isContainer){ right=`<span class="tag">共 ${kids.length} 个教程</span>`; }
+  if(isContainer){ right=``; }
   else if(empty){ right=`<span class="tag">待补充</span><span class="btn" style="opacity:.45;cursor:not-allowed">待补充</span>`; }
   else if(isDl){ right=`<span class="tag">${typeTxt}</span><a class="btn" href="${it.file}" download="${dlName}">下载</a>`; }
   else { right=`<span class="tag">${typeTxt}</span><a class="btn" href="${it.file}" target="_blank" rel="noopener">查看</a>`; }
   let metaTxt;
-  if(isContainer){ metaTxt=(it.desc||"二级教程合集")+" · 共 "+kids.length+" 个教程"; }
+  if(isContainer){ metaTxt=(it.desc||""); }
   else if(empty){ metaTxt="待补充 · "+(cat||""); }
   else { metaTxt=typeTxt+" · "+(cat||"")+(it.desc?(" · "+it.desc):""); }
   const row=document.createElement("div");

@@ -22,7 +22,7 @@
     ]},
     { "name": "AI大课", "items": [
       { "title": "AI 六项重塑大课", "type": "video", "permission": "view", "file": "资料/ai-six-remodel.mp4", "desc": "AI 六项重塑课程演示" },
-      { "title": "AI 新商业实战课", "type": "link", "permission": "view", "file": "", "desc": "AI 新商业课 · 实战教程合集",
+      { "title": "AI 新商业实战课", "type": "link", "permission": "view", "file": "", "desc": "以下为示例，详细课程介绍后续上传",
         "children": [
           { "title": "教你制作官网", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "AI 新商业课 · 实战教程" },
           { "title": "上线问卷制作", "type": "video", "permission": "view", "file": "资料/questionnaire-tutorial.mp4", "desc": "AI 新商业课 · 实战教程（站内视频）" },
