@@ -1,0 +1,15 @@
+{
+  "updated": "2026-10-26",
+  "categories": [
+    { "name": "研究院介绍", "items": [
+      { "title": "研究院官网（主站）", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/", "desc": "腾讯云托管主站" },
+      { "title": "研究院官网（镜像）", "type": "link", "permission": "view", "file": "https://yaoyaoflyaway-cyber.github.io/sh-vitality-org-website/", "desc": "GitHub Pages 镜像" },
+      { "title": "上海活力组织研究院 · 企业宣传片", "type": "video", "permission": "view", "file": "https://vitality-promo-preview.app.workbuddy.host/", "desc": "官方宣传片在线观看" },
+      { "title": "研究院机构介绍 PPT（v149 完整版）", "type": "doc", "permission": "view", "file": "资料/org-intro-v149.pdf", "desc": "机构介绍完整版演示文稿" }
+    ]},
+    { "name": "人才标准", "items": [] },
+    { "name": "合伙共创", "items": [] },
+    { "name": "产品演示", "items": [] },
+    { "name": "学习手册", "items": [] }
+  ]
+}

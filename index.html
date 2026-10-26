@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>上海活力组织研究院 · 资源中心</title>
+<style>
+  :root{
+    --ink:#111; --sub:#8a8a8a; --line:#f0f0f0; --chip:#f2f2f2; --chip-ink:#444;
+    --btn:#111; --tag:#666;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#fff;color:var(--ink);line-height:1.5;
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:40px 20px 80px}
+  h1{font-size:22px;font-weight:600;letter-spacing:.3px}
+  .stats{margin-top:6px;font-size:13px;color:var(--sub)}
+  .search{margin-top:22px;position:relative}
+  .search input{width:100%;height:42px;border:1px solid #e6e6e6;border-radius:10px;
+    padding:0 14px 0 40px;font-size:14px;color:var(--ink);outline:none;background:#fff}
+  .search input:focus{border-color:#cfcfcf}
+  .search input::placeholder{color:#b5b5b5}
+  .search .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    width:16px;height:16px;color:#b5b5b5}
+  .tabs{margin-top:20px;display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;padding:7px 15px;border-radius:20px;background:var(--chip);color:var(--chip-ink);
+    font-size:13px;border:0;cursor:pointer;white-space:nowrap;transition:.12s}
+  .tab:hover{background:#e8e8e8}
+  .tab.on{background:#111;color:#fff}
+  .count{margin-top:22px;font-size:13px;color:var(--sub)}
+  .list{margin-top:6px}
+  .row{display:flex;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0}
+  .main{flex:1;min-width:0}
+  .title{font-size:15px;font-weight:500;color:#111;text-decoration:none;display:block}
+  .title:hover{text-decoration:underline}
+  .meta{margin-top:5px;font-size:12.5px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .right{flex:0 0 auto;display:flex;align-items:center;gap:10px}
+  .tag{font-size:12px;color:var(--tag);background:#fafafa;border:1px solid #eee;
+    border-radius:4px;padding:2px 7px;white-space:nowrap}
+  .btn{display:inline-block;background:var(--btn);color:#fff;font-size:13px;font-weight:500;
+    padding:8px 18px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:.12s}
+  .btn:hover{opacity:.85}
+  .empty{padding:40px 0;text-align:center;color:#b5b5b5;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>上海活力组织研究院 · 资源中心</h1>
+  <div class="stats" id="stats"></div>
+
+  <div class="search">
+    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path>
+    </svg>
+    <input id="q" type="text" placeholder="搜索资源、标签、简介…" autocomplete="off" />
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="count" id="count"></div>
+  <div class="list" id="list"></div>
+</div>
+
+<script>
+const TYPE={doc:"文档",video:"视频",image:"图片",link:"链接",other:"文件"};
+const PROD={pdf:"PDF",docx:"Word",xlsx:"Excel",pptx:"PPT",mp4:"视频",jpg:"图片",png:"图片",txt:"文本",url:"链接"};
+let DATA={categories:[]}, cur="全部", kw="";
+
+function extOf(f){const m=(f||"").match(/\.([a-z0-9]+)(?:[?#]|$)/i);return m?m[1].toLowerCase():"";}
+function allItems(){
+  const out=[];
+  (DATA.categories||[]).forEach(c=>{
+    (c.items||[]).forEach(it=>out.push(Object.assign({_cat:c.name},it)));
+  });
+  return out;
+}
+function renderTabs(){
+  const tabs=document.getElementById("tabs");
+  const names=["全部"].concat((DATA.categories||[]).map(c=>c.name));
+  tabs.innerHTML="";
+  names.forEach(n=>{
+    const b=document.createElement("button");
+    b.className="tab"+(n===cur?" on":"");
+    b.textContent=n;
+    b.onclick=()=>{cur=n;renderTabs();renderList();};
+    tabs.appendChild(b);
+  });
+}
+function renderList(){
+  const list=document.getElementById("list");
+  let items=allItems();
+  if(cur!=="全部") items=items.filter(i=>i._cat===cur);
+  if(kw){const k=kw.toLowerCase();items=items.filter(i=>
+    (i.title||"").toLowerCase().includes(k)||(i.desc||"").toLowerCase().includes(k)||(i._cat||"").toLowerCase().includes(k));}
+  document.getElementById("count").textContent="共 "+items.length+" 个资源";
+  list.innerHTML="";
+  if(items.length===0){list.innerHTML='<div class="empty">暂无资源</div>';return;}
+  items.forEach(it=>{
+    const ext=extOf(it.file);
+    const typeTxt=(it.type&&it.type!=="other")?((ext&&PROD[ext])||TYPE[it.type]||"文件"):((ext&&PROD[ext])||"文件");
+    const isDl=it.permission==="download";
+    const dlName=(it.file||"").split("/").pop().split("\\").pop();
+    const btn=isDl
+      ? `<a class="btn" href="${it.file}" download="${dlName}">下载</a>`
+      : `<a class="btn" href="${it.file}" target="_blank" rel="noopener">查看</a>`;
+    const row=document.createElement("div");
+    row.className="row";
+    row.innerHTML=`<div class="main">
+        <a class="title" href="${it.file}" target="_blank" rel="noopener">${it.title||"未命名"}</a>
+        <div class="meta">${typeTxt} · ${it._cat}${it.desc?" · "+it.desc:""}</div>
+      </div>
+      <div class="right"><span class="tag">${typeTxt}</span>${btn}</div>`;
+    list.appendChild(row);
+  });
+}
+function renderStats(){
+  const cats=(DATA.categories||[]);
+  const n=allItems().length;
+  document.getElementById("stats").textContent=
+    "共 "+n+" 个资源 · "+cats.length+" 个分类"+(DATA.updated?" · 更新于 "+DATA.updated:"");
+}
+async function init(){
+  try{const r=await fetch("data.json",{cache:"no-store"});DATA=await r.json();}
+  catch(e){document.getElementById("list").innerHTML='<div class="empty">数据加载失败</div>';return;}
+  renderStats();renderTabs();renderList();
+}
+document.getElementById("q").addEventListener("input",e=>{kw=e.target.value.trim();renderList();});
+init();
+</script>
+</body>
+</html>
