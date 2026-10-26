@@ -21,7 +21,6 @@
       { "title": "获客王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "流量王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" }
     ]},
-    { "name": "提示工程", "items": [] },
     { "name": "学习手册", "items": [
       { "title": "AI 新商业 · 流量、获客与变现实战课", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "实战课总入口" },
       { "title": "教你制作官网", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "AI 新商业课 · 实战教程" },
