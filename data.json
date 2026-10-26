@@ -21,6 +21,7 @@
       { "title": "获客王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "流量王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" }
     ]},
+    { "name": "提示工程", "items": [] },
     { "name": "学习手册", "items": [
       { "title": "AI 新商业 · 流量、获客与变现实战课", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "实战课总入口" },
       { "title": "教你制作官网", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "AI 新商业课 · 实战教程" },
@@ -31,7 +32,8 @@
       { "title": "PPT 制作", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/ppt/index.html", "desc": "AI 新商业课 · 实战教程" },
       { "title": "数据中台", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/dashboard/index.html", "desc": "AI 新商业课 · 实战教程" },
       { "title": "海报图 / 商品图", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/latte/index.html", "desc": "AI 新商业课 · 实战教程" },
-      { "title": "直播分析手册", "type": "doc", "permission": "view", "file": "资料/live-analysis-handbook.pdf", "desc": "学习手册 PDF" }
+      { "title": "直播分析手册", "type": "doc", "permission": "view", "file": "资料/live-analysis-handbook.pdf", "desc": "学习手册 PDF" },
+      { "title": "联系方式", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/", "desc": "手机/微信 18818011293、15076535358 · 邮箱 yaoyaofly23@163.com · 公众号「上海活力组织研究院」· 地址 上海市松江区时尚谷产业园2号楼2层" }
     ]}
   ]
 }
