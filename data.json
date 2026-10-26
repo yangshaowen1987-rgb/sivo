@@ -36,7 +36,7 @@
     ]},
     { "name": "提示工程", "items": [] },
     { "name": "学习手册", "items": [
-      { "title": "直播爆款话术", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
+      { "title": "直播爆款话术", "type": "doc", "permission": "view", "file": "资料/live-analysis-handbook.pdf", "desc": "直播爆款话术 · 完整拆解手册" },
       { "title": "短视频流量", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "宏观趋势", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "商业系统", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
