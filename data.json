@@ -7,9 +7,31 @@
       { "title": "上海活力组织研究院 · 企业宣传片", "type": "video", "permission": "view", "file": "https://vitality-promo-preview.app.workbuddy.host/", "desc": "官方宣传片在线观看" },
       { "title": "研究院机构介绍 PPT（v149 完整版）", "type": "doc", "permission": "view", "file": "资料/org-intro-v149.pdf", "desc": "机构介绍完整版演示文稿" }
     ]},
-    { "name": "人才标准", "items": [] },
-    { "name": "合伙共创", "items": [] },
-    { "name": "产品演示", "items": [] },
-    { "name": "学习手册", "items": [] }
+    { "name": "人才标准", "items": [
+      { "title": "经营事业合伙人人才标准", "type": "image", "permission": "view", "file": "资料/talent-standard.png", "desc": "五项核心标准 · 从事业选择到影响与带动" },
+      { "title": "经营事业合伙人合作评估", "type": "link", "permission": "view", "file": "https://wj.qq.com/s2/27743965/65wo/", "desc": "在线合作评估问卷" }
+    ]},
+    { "name": "合伙共创", "items": [
+      { "title": "产品矩阵和合作条件", "type": "image", "permission": "view", "file": "资料/partner-terms.png", "desc": "产品矩阵 · 合作条件与权益义务表（最新版）" },
+      { "title": "进一步了解", "type": "video", "permission": "view", "file": "资料/partner-more.mp4", "desc": "经营事业合伙人合作详解视频" }
+    ]},
+    { "name": "产品演示", "items": [
+      { "title": "AI 六项重塑大课", "type": "video", "permission": "view", "file": "资料/ai-six-remodel.mp4", "desc": "AI 六项重塑课程演示" },
+      { "title": "数字人才智能体 · TalentClaw", "type": "link", "permission": "view", "file": "资料/talentclaw-demo.html", "desc": "数字员工任务引擎在线演示" },
+      { "title": "获客王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" },
+      { "title": "流量王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" }
+    ]},
+    { "name": "学习手册", "items": [
+      { "title": "AI 新商业 · 流量、获客与变现实战课", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "实战课总入口" },
+      { "title": "教你制作官网", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "AI 新商业课 · 实战教程" },
+      { "title": "上线问卷制作", "type": "video", "permission": "view", "file": "资料/questionnaire-tutorial.mp4", "desc": "AI 新商业课 · 实战教程（站内视频）" },
+      { "title": "LOGO 制作", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/logo-chat/", "desc": "AI 新商业课 · 实战教程" },
+      { "title": "会议纪要整理", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/meeting/", "desc": "AI 新商业课 · 实战教程" },
+      { "title": "战略＆年度报告撰写", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/report/", "desc": "AI 新商业课 · 实战教程" },
+      { "title": "PPT 制作", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/ppt/index.html", "desc": "AI 新商业课 · 实战教程" },
+      { "title": "数据中台", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/dashboard/index.html", "desc": "AI 新商业课 · 实战教程" },
+      { "title": "海报图 / 商品图", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/latte/index.html", "desc": "AI 新商业课 · 实战教程" },
+      { "title": "直播分析手册", "type": "doc", "permission": "view", "file": "资料/live-analysis-handbook.pdf", "desc": "学习手册 PDF" }
+    ]}
   ]
 }
