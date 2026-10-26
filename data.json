@@ -21,8 +21,8 @@
       { "title": "获客王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "流量王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" }
     ]},
-    { "name": "AI新商业", "items": [
-      { "title": "AI 新商业 · 流量、获客与变现实战课", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "实战课总入口" },
+    { "name": "AI大课", "items": [
+      { "title": "AI 大课 · 流量、获客与变现实战课", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "实战课总入口" },
       { "title": "教你制作官网", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "AI 新商业课 · 实战教程" },
       { "title": "上线问卷制作", "type": "video", "permission": "view", "file": "资料/questionnaire-tutorial.mp4", "desc": "AI 新商业课 · 实战教程（站内视频）" },
       { "title": "LOGO 制作", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/logo-chat/", "desc": "AI 新商业课 · 实战教程" },
@@ -32,6 +32,7 @@
       { "title": "数据中台", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/dashboard/index.html", "desc": "AI 新商业课 · 实战教程" },
       { "title": "海报图 / 商品图", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/latte/index.html", "desc": "AI 新商业课 · 实战教程" }
     ]},
+    { "name": "提示工程", "items": [] },
     { "name": "学习手册", "items": [
       { "title": "直播爆款话术", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "短视频流量", "type": "link", "permission": "view", "file": "", "desc": "待补充" },

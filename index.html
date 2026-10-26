@@ -23,7 +23,7 @@
   .search input::placeholder{color:#b5b5b5}
   .search .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);
     width:16px;height:16px;color:#b5b5b5}
-  .tabs{margin-top:20px;display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .tabs{margin-top:20px;display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .tabs::-webkit-scrollbar{display:none}
   .tab{flex:0 0 auto;padding:7px 15px;border-radius:20px;background:var(--chip);color:var(--chip-ink);
     font-size:13px;border:0;cursor:pointer;white-space:nowrap;transition:.12s}
@@ -98,20 +98,26 @@ function renderList(){
   list.innerHTML="";
   if(items.length===0){list.innerHTML='<div class="empty">暂无资源</div>';return;}
   items.forEach(it=>{
+    const empty=!it.file;
     const ext=extOf(it.file);
     const typeTxt=(it.type&&it.type!=="other")?((ext&&PROD[ext])||TYPE[it.type]||"文件"):((ext&&PROD[ext])||"文件");
     const isDl=it.permission==="download";
     const dlName=(it.file||"").split("/").pop().split("\\").pop();
-    const btn=isDl
-      ? `<a class="btn" href="${it.file}" download="${dlName}">下载</a>`
-      : `<a class="btn" href="${it.file}" target="_blank" rel="noopener">查看</a>`;
+    const titleHtml=empty
+      ? `<span class="title">${it.title||"未命名"}</span>`
+      : `<a class="title" href="${it.file}" target="_blank" rel="noopener">${it.title||"未命名"}</a>`;
+    const btn=empty
+      ? `<span class="btn" style="opacity:.45;cursor:not-allowed">待补充</span>`
+      : (isDl?`<a class="btn" href="${it.file}" download="${dlName}">下载</a>`:`<a class="btn" href="${it.file}" target="_blank" rel="noopener">查看</a>`);
+    const tagTxt=empty?"待补充":typeTxt;
+    const metaTxt=empty?("待补充 · "+it._cat):(typeTxt+" · "+it._cat+(it.desc?" · "+it.desc:""));
     const row=document.createElement("div");
     row.className="row";
     row.innerHTML=`<div class="main">
-        <a class="title" href="${it.file}" target="_blank" rel="noopener">${it.title||"未命名"}</a>
-        <div class="meta">${typeTxt} · ${it._cat}${it.desc?" · "+it.desc:""}</div>
+        ${titleHtml}
+        <div class="meta">${metaTxt}</div>
       </div>
-      <div class="right"><span class="tag">${typeTxt}</span>${btn}</div>`;
+      <div class="right"><span class="tag">${tagTxt}</span>${btn}</div>`;
     list.appendChild(row);
   });
 }
