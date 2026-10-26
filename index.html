@@ -42,6 +42,13 @@
   .row{display:flex;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
   .row:last-child{border-bottom:0}
   .row:hover .title{text-decoration:underline}
+  /* 二级（子链接）：向右缩进 + 左侧引导线，体现层级 */
+  .row.child{padding-left:36px;position:relative;border-bottom-color:#f7f7f7}
+  .row.child::before{content:"";position:absolute;left:18px;top:12px;bottom:12px;width:1px;background:#e6e6e6}
+  .row.child .title{font-size:14px;font-weight:400;color:#333}
+  .row.child .meta{font-size:12px}
+  .row.child .btn{padding:6px 14px;font-size:12.5px}
+  .row.parent .title{font-weight:600}
   .main{flex:1;min-width:0}
   .title{font-size:15px;font-weight:500;color:#111;text-decoration:none;display:block}
   .meta{margin-top:5px;font-size:12.5px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -104,48 +111,71 @@ function renderTabs(){
 function updateActive(){
   tabBtns.forEach(b=>b.classList.toggle("on", b._name===cur));
 }
+function typeLabel(it){
+  const ext=extOf(it.file);
+  return (it.type&&it.type!=="other")?((ext&&PROD[ext])||TYPE[it.type]||"文件"):((ext&&PROD[ext])||"文件");
+}
+function makeRow(it,isChild,cat){
+  const kids=it.children||[];
+  const isContainer=kids.length>0;
+  const empty=!it.file&&!isContainer;
+  const typeTxt=typeLabel(it);
+  const isDl=it.permission==="download";
+  const dlName=(it.file||"").split("/").pop().split("\\").pop();
+  const titleHtml=it.file
+    ? `<a class="title" href="${it.file}" target="_blank" rel="noopener">${it.title||"未命名"}</a>`
+    : `<span class="title">${it.title||"未命名"}</span>`;
+  let right;
+  if(isContainer){ right=`<span class="tag">共 ${kids.length} 个教程</span>`; }
+  else if(empty){ right=`<span class="tag">待补充</span><span class="btn" style="opacity:.45;cursor:not-allowed">待补充</span>`; }
+  else if(isDl){ right=`<span class="tag">${typeTxt}</span><a class="btn" href="${it.file}" download="${dlName}">下载</a>`; }
+  else { right=`<span class="tag">${typeTxt}</span><a class="btn" href="${it.file}" target="_blank" rel="noopener">查看</a>`; }
+  let metaTxt;
+  if(isContainer){ metaTxt=(it.desc||"二级教程合集")+" · 共 "+kids.length+" 个教程"; }
+  else if(empty){ metaTxt="待补充 · "+(cat||""); }
+  else { metaTxt=typeTxt+" · "+(cat||"")+(it.desc?(" · "+it.desc):""); }
+  const row=document.createElement("div");
+  row.className="row"+(isChild?" child":"")+(isContainer?" parent":"");
+  row.innerHTML=`<div class="main">${titleHtml}<div class="meta">${metaTxt}</div></div><div class="right">${right}</div>`;
+  return row;
+}
+function countAll(){
+  let n=0;
+  (DATA.categories||[]).forEach(c=>(c.items||[]).forEach(it=>{ n++; n+=(it.children||[]).length; }));
+  return n;
+}
 function renderList(){
   const list=document.getElementById("list");
   let items=allItems();
   if(cur!=="全部") items=items.filter(i=>i._cat===cur);
-  if(kw){const k=kw.toLowerCase();items=items.filter(i=>
-    (i.title||"").toLowerCase().includes(k)||(i.desc||"").toLowerCase().includes(k)||(i._cat||"").toLowerCase().includes(k));}
-  document.getElementById("count").textContent="共 "+items.length+" 个资源";
-  list.innerHTML="";
-  if(items.length===0){list.innerHTML='<div class="empty">暂无资源</div>';return;}
+  const k=kw?kw.toLowerCase():"";
+  const frag=[]; let shown=0;
   items.forEach(it=>{
-    const empty=!it.file;
-    const ext=extOf(it.file);
-    const typeTxt=(it.type&&it.type!=="other")?((ext&&PROD[ext])||TYPE[it.type]||"文件"):((ext&&PROD[ext])||"文件");
-    const isDl=it.permission==="download";
-    const dlName=(it.file||"").split("/").pop().split("\\").pop();
-    // 标题：有内容则直接可点开（网址/文件都在新标签直接打开成果）；空则纯文本
-    const titleHtml=empty
-      ? `<span class="title">${it.title||"未命名"}</span>`
-      : `<a class="title" href="${it.file}" target="_blank" rel="noopener">${it.title||"未命名"}</a>`;
-    // 右侧按钮：可下载给「下载」；否则「查看」直接新标签打开成果；空则「待补充」不可点
-    const btn=empty
-      ? `<span class="btn" style="opacity:.45;cursor:not-allowed">待补充</span>`
-      : (isDl
-          ? `<a class="btn" href="${it.file}" download="${dlName}">下载</a>`
-          : `<a class="btn" href="${it.file}" target="_blank" rel="noopener">查看</a>`);
-    const tagTxt=empty?"待补充":typeTxt;
-    const metaTxt=empty?("待补充 · "+it._cat):(typeTxt+" · "+it._cat+(it.desc?" · "+it.desc:""));
-    const row=document.createElement("div");
-    row.className="row";
-    row.innerHTML=`<div class="main">
-        ${titleHtml}
-        <div class="meta">${metaTxt}</div>
-      </div>
-      <div class="right"><span class="tag">${tagTxt}</span>${btn}</div>`;
-    list.appendChild(row);
+    const kids=it.children||[];
+    if(!k){
+      frag.push(makeRow(it,false,it._cat)); shown++;
+      kids.forEach(ch=>{ frag.push(makeRow(ch,true,it._cat)); shown++; });
+      return;
+    }
+    const pHit=(it.title||"").toLowerCase().includes(k)||(it.desc||"").toLowerCase().includes(k)||(it._cat||"").toLowerCase().includes(k);
+    const hit=kids.filter(ch=>(ch.title||"").toLowerCase().includes(k)||(ch.desc||"").toLowerCase().includes(k));
+    if(pHit){
+      frag.push(makeRow(it,false,it._cat)); shown++;
+      kids.forEach(ch=>{ frag.push(makeRow(ch,true,it._cat)); shown++; });
+    }else if(hit.length){
+      frag.push(makeRow(it,false,it._cat)); shown++;
+      hit.forEach(ch=>{ frag.push(makeRow(ch,true,it._cat)); shown++; });
+    }
   });
+  document.getElementById("count").textContent="共 "+shown+" 个资源";
+  list.innerHTML="";
+  if(shown===0){list.innerHTML='<div class="empty">暂无资源</div>';return;}
+  frag.forEach(n=>list.appendChild(n));
 }
 function renderStats(){
   const cats=(DATA.categories||[]);
-  const n=allItems().length;
   document.getElementById("stats").textContent=
-    "共 "+n+" 个资源 · "+cats.length+" 个分类"+(DATA.updated?" · 更新于 "+DATA.updated:"");
+    "共 "+countAll()+" 个资源 · "+cats.length+" 个分类"+(DATA.updated?" · 更新于 "+DATA.updated:"");
 }
 async function init(){
   const ret=document.getElementById("retProj");

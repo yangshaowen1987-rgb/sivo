@@ -16,21 +16,22 @@
       { "title": "进一步了解", "type": "video", "permission": "view", "file": "资料/partner-more.mp4", "desc": "经营事业合伙人合作详解视频" }
     ]},
     { "name": "产品演示", "items": [
-      { "title": "AI 六项重塑大课", "type": "video", "permission": "view", "file": "资料/ai-six-remodel.mp4", "desc": "AI 六项重塑课程演示" },
       { "title": "数字人才智能体 · TalentClaw", "type": "link", "permission": "view", "file": "资料/talentclaw-demo.html", "desc": "数字员工任务引擎在线演示" },
       { "title": "获客王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "流量王演示视频", "type": "video", "permission": "view", "file": "", "desc": "待补充" }
     ]},
     { "name": "AI大课", "items": [
-      { "title": "AI 大课 · 流量、获客与变现实战课", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "实战课总入口" },
-      { "title": "教你制作官网", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/showcase/", "desc": "AI 新商业课 · 实战教程" },
-      { "title": "上线问卷制作", "type": "video", "permission": "view", "file": "资料/questionnaire-tutorial.mp4", "desc": "AI 新商业课 · 实战教程（站内视频）" },
-      { "title": "LOGO 制作", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/logo-chat/", "desc": "AI 新商业课 · 实战教程" },
-      { "title": "会议纪要整理", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/meeting/", "desc": "AI 新商业课 · 实战教程" },
-      { "title": "战略＆年度报告撰写", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/report/", "desc": "AI 新商业课 · 实战教程" },
-      { "title": "PPT 制作", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/ppt/index.html", "desc": "AI 新商业课 · 实战教程" },
-      { "title": "数据中台", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/dashboard/index.html", "desc": "AI 新商业课 · 实战教程" },
-      { "title": "海报图 / 商品图", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/latte/index.html", "desc": "AI 新商业课 · 实战教程" }
+      { "title": "AI 六项重塑大课", "type": "video", "permission": "view", "file": "资料/ai-six-remodel.mp4", "desc": "AI 六项重塑课程演示" },
+      { "title": "AI 新商业实战课", "type": "link", "permission": "view", "file": "", "desc": "AI 新商业课 · 实战教程合集",
+        "children": [
+          { "title": "上线问卷制作", "type": "video", "permission": "view", "file": "资料/questionnaire-tutorial.mp4", "desc": "AI 新商业课 · 实战教程（站内视频）" },
+          { "title": "LOGO 制作", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/logo-chat/", "desc": "AI 新商业课 · 实战教程" },
+          { "title": "会议纪要整理", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/meeting/", "desc": "AI 新商业课 · 实战教程" },
+          { "title": "战略＆年度报告撰写", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/report/", "desc": "AI 新商业课 · 实战教程" },
+          { "title": "PPT 制作", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/ppt/index.html", "desc": "AI 新商业课 · 实战教程" },
+          { "title": "数据中台", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/dashboard/index.html", "desc": "AI 新商业课 · 实战教程" },
+          { "title": "海报图 / 商品图", "type": "link", "permission": "view", "file": "https://sivo-d5gznqqes1eec60f8-1463354243.tcloudbaseapp.com/showcase/latte/index.html", "desc": "AI 新商业课 · 实战教程" }
+        ] }
     ]},
     { "name": "提示工程", "items": [] },
     { "name": "学习手册", "items": [
