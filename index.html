@@ -30,8 +30,7 @@
   .search input::placeholder{color:#b5b5b5}
   .search .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);
     width:16px;height:16px;color:#b5b5b5}
-  .tabs{margin-top:20px;display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .tabs::-webkit-scrollbar{display:none}
+  .tabs{margin-top:20px;display:flex;gap:8px;flex-wrap:wrap;padding-bottom:2px}
   .tab{flex:0 0 auto;padding:7px 15px;border-radius:20px;background:var(--chip);color:var(--chip-ink);
     font-size:13px;border:0;cursor:pointer;white-space:nowrap;transition:.12s}
   .tab:hover{background:#e8e8e8}
@@ -86,17 +85,22 @@ function allItems(){
   });
   return out;
 }
+let tabBtns=[];
 function renderTabs(){
   const tabs=document.getElementById("tabs");
   const names=["全部"].concat((DATA.categories||[]).map(c=>c.name));
-  tabs.innerHTML="";
+  tabs.innerHTML=""; tabBtns=[];
   names.forEach(n=>{
     const b=document.createElement("button");
-    b.className="tab"+(n===cur?" on":"");
-    b.textContent=n;
-    b.onclick=()=>{cur=n;renderTabs();renderList();};
-    tabs.appendChild(b);
+    b.className="tab"; b.type="button"; b.textContent=n; b._name=n;
+    b.onclick=()=>{ if(cur===n) return; cur=n; updateActive(); renderList(); };
+    tabs.appendChild(b); tabBtns.push(b);
   });
+  updateActive();
+}
+/* 只切高亮，不重建 DOM —— 避免点击时整排重绘导致页面/滚动条"跳一下" */
+function updateActive(){
+  tabBtns.forEach(b=>b.classList.toggle("on", b._name===cur));
 }
 function renderList(){
   const list=document.getElementById("list");
