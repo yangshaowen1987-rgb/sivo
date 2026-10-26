@@ -10,11 +10,12 @@
     --btn:#111; --tag:#666;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#fff;color:var(--ink);line-height:1.5;
+  body{background:#fff;color:var(--ink);line-height:1.5;overflow-x:clip;
     font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;
     -webkit-font-smoothing:antialiased}
   .wrap{max-width:720px;margin:0 auto;padding:40px 20px 80px}
-  .back{display:inline-block;margin-bottom:16px;font-size:13px;color:var(--sub);text-decoration:none;border:1px solid #ececec;padding:6px 14px;border-radius:20px;transition:.12s}
+  .back{display:inline-flex;align-items:center;gap:6px;margin-bottom:16px;font-size:13px;color:var(--sub);
+    text-decoration:none;border:1px solid #ececec;padding:6px 14px;border-radius:20px;transition:.12s;cursor:pointer}
   .back:hover{background:#fafafa;color:var(--ink)}
   h1{font-size:22px;font-weight:600;letter-spacing:.3px}
   .stats{margin-top:6px;font-size:13px;color:var(--sub)}
@@ -33,37 +34,59 @@
   .tab.on{background:#111;color:#fff}
   .count{margin-top:22px;font-size:13px;color:var(--sub)}
   .list{margin-top:6px}
-  .row{display:flex;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .row{display:flex;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--line);cursor:pointer}
   .row:last-child{border-bottom:0}
+  .row:hover .title{text-decoration:underline}
   .main{flex:1;min-width:0}
   .title{font-size:15px;font-weight:500;color:#111;text-decoration:none;display:block}
-  .title:hover{text-decoration:underline}
   .meta{margin-top:5px;font-size:12.5px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .right{flex:0 0 auto;display:flex;align-items:center;gap:10px}
   .tag{font-size:12px;color:var(--tag);background:#fafafa;border:1px solid #eee;
     border-radius:4px;padding:2px 7px;white-space:nowrap}
   .btn{display:inline-block;background:var(--btn);color:#fff;font-size:13px;font-weight:500;
-    padding:8px 18px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:.12s}
+    padding:8px 18px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:.12s;border:0;cursor:pointer}
   .btn:hover{opacity:.85}
   .empty{padding:40px 0;text-align:center;color:#b5b5b5;font-size:14px}
+
+  /* 详情视图 */
+  #detail{display:none}
+  #detail.show{display:block}
+  .d-title{font-size:18px;font-weight:600;margin:14px 0 4px}
+  .d-meta{font-size:13px;color:var(--sub);margin-bottom:16px}
+  .viewer{width:100%;min-height:320px;background:#fafafa;border:1px solid #eee;border-radius:10px;overflow:hidden}
+  .viewer iframe{width:100%;height:72vh;border:0;background:#fff}
+  .viewer img{max-width:100%;display:block;margin:0 auto}
+  .viewer video{max-width:100%;display:block;margin:0 auto;background:#000}
+  .d-actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+  .d-link{font-size:13px;color:var(--sub);word-break:break-all;margin-top:8px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/">← 返回主网址</a>
-  <h1>上海活力组织研究院 · 资源中心</h1>
-  <div class="stats" id="stats"></div>
+  <div id="home">
+    <h1>上海活力组织研究院 · 资源中心</h1>
+    <div class="stats" id="stats"></div>
 
-  <div class="search">
-    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path>
-    </svg>
-    <input id="q" type="text" placeholder="搜索资源、标签、简介…" autocomplete="off" />
+    <div class="search">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path>
+      </svg>
+      <input id="q" type="text" placeholder="搜索资源、标签、简介…" autocomplete="off" />
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+    <div class="count" id="count"></div>
+    <div class="list" id="list"></div>
   </div>
 
-  <div class="tabs" id="tabs"></div>
-  <div class="count" id="count"></div>
-  <div class="list" id="list"></div>
+  <div id="detail">
+    <a class="back" id="backBtn">← 返回主网址</a>
+    <div class="d-title" id="dTitle"></div>
+    <div class="d-meta" id="dMeta"></div>
+    <div class="viewer" id="viewer"></div>
+    <div class="d-actions" id="dActions"></div>
+    <div class="d-link" id="dLink"></div>
+  </div>
 </div>
 
 <script>
@@ -104,23 +127,16 @@ function renderList(){
     const empty=!it.file;
     const ext=extOf(it.file);
     const typeTxt=(it.type&&it.type!=="other")?((ext&&PROD[ext])||TYPE[it.type]||"文件"):((ext&&PROD[ext])||"文件");
-    const isDl=it.permission==="download";
-    const dlName=(it.file||"").split("/").pop().split("\\").pop();
-    const titleHtml=empty
-      ? `<span class="title">${it.title||"未命名"}</span>`
-      : `<a class="title" href="${it.file}" target="_blank" rel="noopener">${it.title||"未命名"}</a>`;
-    const btn=empty
-      ? `<span class="btn" style="opacity:.45;cursor:not-allowed">待补充</span>`
-      : (isDl?`<a class="btn" href="${it.file}" download="${dlName}">下载</a>`:`<a class="btn" href="${it.file}" target="_blank" rel="noopener">查看</a>`);
     const tagTxt=empty?"待补充":typeTxt;
     const metaTxt=empty?("待补充 · "+it._cat):(typeTxt+" · "+it._cat+(it.desc?" · "+it.desc:""));
     const row=document.createElement("div");
     row.className="row";
     row.innerHTML=`<div class="main">
-        ${titleHtml}
+        <span class="title">${it.title||"未命名"}</span>
         <div class="meta">${metaTxt}</div>
       </div>
-      <div class="right"><span class="tag">${tagTxt}</span>${btn}</div>`;
+      <div class="right"><span class="tag">${tagTxt}</span></div>`;
+    row.onclick=()=>showDetail(it);
     list.appendChild(row);
   });
 }
@@ -130,12 +146,61 @@ function renderStats(){
   document.getElementById("stats").textContent=
     "共 "+n+" 个资源 · "+cats.length+" 个分类"+(DATA.updated?" · 更新于 "+DATA.updated:"");
 }
+function showDetail(it){
+  document.getElementById("home").style.display="none";
+  document.getElementById("detail").classList.add("show");
+  document.getElementById("dTitle").textContent=it.title||"未命名";
+  const ext=extOf(it.file);
+  const typeTxt=(it.type&&it.type!=="other")?((ext&&PROD[ext])||TYPE[it.type]||"文件"):((ext&&PROD[ext])||"文件");
+  document.getElementById("dMeta").textContent=
+    (it.file?"":"待补充 · ")+it._cat+(it.desc?" · "+it.desc:"");
+  const viewer=document.getElementById("viewer");
+  const actions=document.getElementById("dActions");
+  const linkBox=document.getElementById("dLink");
+  viewer.innerHTML="";actions.innerHTML="";linkBox.innerHTML="";
+  if(!it.file){
+    viewer.innerHTML='<div class="empty">该资源待补充</div>';
+    return;
+  }
+  const isLocal=it.file.indexOf("http")!==0;
+  if(isLocal){
+    if(it.type==="image"){
+      viewer.innerHTML=`<img src="${it.file}" alt="${(it.title||"").replace(/"/g,'')}" />`;
+    } else if(it.type==="video"){
+      viewer.innerHTML=`<video controls src="${it.file}"></video>`;
+    } else {
+      viewer.innerHTML=`<iframe src="${it.file}" title="${(it.title||"").replace(/"/g,'')}"></iframe>`;
+    }
+    const openBtn=document.createElement("a");
+    openBtn.className="btn";
+    openBtn.textContent="打开 / 下载";
+    openBtn.href=it.file;
+    openBtn.target="_blank";openBtn.rel="noopener";
+    if(it.permission!=="download"){openBtn.removeAttribute("download");}
+    actions.appendChild(openBtn);
+  } else {
+    const openBtn=document.createElement("a");
+    openBtn.className="btn";
+    openBtn.textContent="在新窗口打开";
+    openBtn.href=it.file;
+    openBtn.target="_blank";openBtn.rel="noopener";
+    actions.appendChild(openBtn);
+    linkBox.textContent="链接："+it.file;
+    viewer.innerHTML='<div class="empty">点击下方按钮在新窗口打开该资源</div>';
+  }
+  window.scrollTo(0,0);
+}
+function showHome(){
+  document.getElementById("detail").classList.remove("show");
+  document.getElementById("home").style.display="block";
+}
 async function init(){
   try{const r=await fetch("data.json",{cache:"no-store"});DATA=await r.json();}
   catch(e){document.getElementById("list").innerHTML='<div class="empty">数据加载失败</div>';return;}
   renderStats();renderTabs();renderList();
+  document.getElementById("backBtn").onclick=showHome;
+  document.getElementById("q").addEventListener("input",e=>{kw=e.target.value.trim();renderList();});
 }
-document.getElementById("q").addEventListener("input",e=>{kw=e.target.value.trim();renderList();});
 init();
 </script>
 </body>
