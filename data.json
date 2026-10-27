@@ -5,7 +5,7 @@
       { "title": "研究院官网（主站）", "type": "link", "permission": "view", "file": "https://sivo-sivo-d5gznqqes1eec60f8.webapps.tcloudbase.com/", "desc": "腾讯云托管主站" },
       { "title": "研究院官网（镜像）", "type": "link", "permission": "view", "file": "https://yaoyaoflyaway-cyber.github.io/sh-vitality-org-website/", "desc": "GitHub Pages 镜像" },
       { "title": "上海活力组织研究院 · 企业宣传片", "type": "video", "permission": "view", "file": "https://vitality-promo-preview.app.workbuddy.host/", "desc": "官方宣传片在线观看" },
-      { "title": "研究院机构介绍 PPT（v149 完整版）", "type": "doc", "permission": "view", "file": "viewer.html?file=资料/org-intro-v149.pdf&title=研究院机构介绍PPT（v149完整版）", "desc": "机构介绍完整版演示文稿 · 在线阅读" }
+      { "title": "研究院机构介绍 PPT（v149 完整版）", "type": "doc", "permission": "view", "file": "viewer.html?file=https://raw.githubusercontent.com/yangshaowen1987-rgb/sivo/main/%E8%B5%84%E6%96%99/org-intro-v149.pdf&title=研究院机构介绍PPT（v149完整版）", "desc": "机构介绍完整版演示文稿 · 在线阅读" }
     ]},
     { "name": "人才标准", "items": [
       { "title": "经营事业合伙人人才标准", "type": "image", "permission": "view", "file": "资料/talent-standard.png", "desc": "五项核心标准 · 从事业选择到影响与带动" },
@@ -36,7 +36,7 @@
     ]},
     { "name": "提示工程", "items": [] },
     { "name": "学习手册", "items": [
-      { "title": "直播爆款话术", "type": "doc", "permission": "view", "file": "viewer.html?file=资料/live-analysis-handbook.pdf&title=直播爆款话术手册", "desc": "直播爆款话术 · 完整拆解手册 · 在线阅读" },
+      { "title": "直播爆款话术", "type": "doc", "permission": "view", "file": "viewer.html?file=https://raw.githubusercontent.com/yangshaowen1987-rgb/sivo/main/%E8%B5%84%E6%96%99/live-analysis-handbook.pdf&title=直播爆款话术手册", "desc": "直播爆款话术 · 完整拆解手册 · 在线阅读" },
       { "title": "短视频流量", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "宏观趋势", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
       { "title": "商业系统", "type": "link", "permission": "view", "file": "", "desc": "待补充" },
