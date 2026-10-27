@@ -59,6 +59,11 @@
     padding:8px 18px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:.12s;border:0;cursor:pointer}
   .btn:hover{opacity:.85}
   .empty{padding:40px 0;text-align:center;color:#b5b5b5;font-size:14px}
+  /* 联系方式：直接完整展示，不跳转、不掩盖 */
+  .contact-box{margin-top:12px;padding:16px 18px;background:#fafafa;border:1px solid #ececec;border-radius:10px;
+    display:flex;flex-direction:column;gap:10px}
+  .contact-line{font-size:14.5px;color:#222;line-height:1.55}
+  .contact-line b{display:inline-block;min-width:64px;color:#999;font-weight:500;margin-right:6px}
 </style>
 </head>
 <body>
@@ -118,25 +123,35 @@ function typeLabel(it){
 function makeRow(it,isChild,cat){
   const kids=it.children||[];
   const isContainer=kids.length>0;
+  const isContact=it.type==="contact";
   const empty=!it.file&&!isContainer;
   const typeTxt=typeLabel(it);
   const isDl=it.permission==="download";
   const dlName=(it.file||"").split("/").pop().split("\\").pop();
-  const titleHtml=it.file
+  const titleHtml=(it.file && !isContact)
     ? `<a class="title" href="${it.file}" target="_blank" rel="noopener">${it.title||"未命名"}</a>`
     : `<span class="title">${it.title||"未命名"}</span>`;
   let right;
   if(isContainer){ right=``; }
+  else if(isContact){ right=``; }
   else if(empty){ right=`<span class="tag">待补充</span><span class="btn" style="opacity:.45;cursor:not-allowed">待补充</span>`; }
   else if(isDl){ right=`<span class="tag">${typeTxt}</span><a class="btn" href="${it.file}" download="${dlName}">下载</a>`; }
   else { right=`<span class="tag">${typeTxt}</span><a class="btn" href="${it.file}" target="_blank" rel="noopener">查看</a>`; }
-  let metaTxt;
+  let metaTxt, contactHtml="";
   if(isContainer){ metaTxt=(it.desc||""); }
+  else if(isContact){
+    metaTxt="";
+    const lines=(it.desc||"").split("·").map(s=>s.trim()).filter(Boolean);
+    contactHtml='<div class="contact-box">'+lines.map(l=>{
+      const m=l.match(/^(.*?)：(.*)$/);
+      return m?`<div class="contact-line"><b>${m[1]}</b>${m[2]}</div>`:`<div class="contact-line">${l}</div>`;
+    }).join("")+'</div>';
+  }
   else if(empty){ metaTxt="待补充 · "+(cat||""); }
   else { metaTxt=typeTxt+" · "+(cat||"")+(it.desc?(" · "+it.desc):""); }
   const row=document.createElement("div");
   row.className="row"+(isChild?" child":"")+(isContainer?" parent":"");
-  row.innerHTML=`<div class="main">${titleHtml}<div class="meta">${metaTxt}</div></div><div class="right">${right}</div>`;
+  row.innerHTML=`<div class="main">${titleHtml}<div class="meta">${metaTxt}</div>${contactHtml}</div><div class="right">${right}</div>`;
   return row;
 }
 function countAll(){
