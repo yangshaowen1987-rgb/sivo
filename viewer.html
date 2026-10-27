@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>在线阅读</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#525659;font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;color:#fff}
+  .top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;
+    padding:11px 14px;background:#1f1f1f}
+  .top a{color:#fff;text-decoration:none;font-size:14px;opacity:.92;white-space:nowrap}
+  .top .t{font-size:14px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .top .pg{font-size:13px;color:#bbb;white-space:nowrap}
+  .wrap{max-width:900px;margin:0 auto;padding:18px 10px 80px}
+  .page{margin:0 auto 14px;background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.35);border-radius:3px;overflow:hidden}
+  .page canvas{display:block;width:100%;height:auto}
+  .ph{width:100%;background:#fff;display:flex;align-items:center;justify-content:center;
+    color:#aaa;font-size:13px;min-height:480px}
+  .loading{padding:48px 16px;text-align:center;color:#bbb;font-size:14px;line-height:1.7}
+  .loading b{color:#fff}
+</style>
+</head>
+<body>
+  <div class="top">
+    <a href="index.html">← 资源中心</a>
+    <span class="t" id="title">文档</span>
+    <span class="pg" id="pg"></span>
+  </div>
+  <div class="wrap" id="wrap">
+    <div class="loading" id="loading">
+      正在加载在线阅读器…<br/><span style="font-size:12px;opacity:.7">（需联网加载，若长时间不动请检查网络）</span>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+  <script>
+  (function(){
+    var loading=document.getElementById('loading');
+    if(typeof pdfjsLib==='undefined'){
+      loading.innerHTML='<b>阅读器加载失败</b><br/>无法联网加载 PDF 组件，请检查网络后重试。';
+      return;
+    }
+    var params=new URLSearchParams(location.search);
+    var file=params.get('file');
+    var title=params.get('title')||'文档';
+    document.getElementById('title').textContent=title;
+    document.title=title+' · 在线阅读';
+    var wrap=document.getElementById('wrap');
+    var pgEl=document.getElementById('pg');
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+
+    var pages=[];   // {i, div, ph, rendered}
+    function fitScale(page,div){
+      var base=page.getViewport({scale:1});
+      var w=(div&&div.clientWidth)||wrap.clientWidth||Math.min(window.innerWidth-20,880);
+      return w/base.width;
+    }
+    function render(o){
+      if(o.rendered) return;
+      o.rendered=true;
+      pdf.getPage(o.i).then(function(page){
+        var scale=fitScale(page,o.div);
+        var viewport=page.getViewport({scale:scale});
+        var canvas=document.createElement('canvas');
+        var ctx=canvas.getContext('2d');
+        var dpr=Math.min(window.devicePixelRatio||1,2);
+        canvas.width=Math.floor(viewport.width*dpr);
+        canvas.height=Math.floor(viewport.height*dpr);
+        o.ph.replaceWith(canvas);
+        return page.render({canvasContext:ctx,viewport:viewport,transform:[dpr,0,0,dpr,0,0]}).promise;
+      }).then(function(){
+        pgEl.textContent='第 '+o.i+' / '+pdf.numPages+' 页';
+      }).catch(function(err){
+        o.ph.textContent='第 '+o.i+' 页渲染失败：'+err.message;
+      });
+    }
+    function buildObserver(){
+      if(!('IntersectionObserver' in window)){ pages.forEach(render); return; }
+      var io=new IntersectionObserver(function(ents){
+        ents.forEach(function(e){ if(e.isIntersecting) render(e.target.__pg); });
+      },{rootMargin:'400px 0px'});
+      pages.forEach(function(o){ o.div.__pg=o; io.observe(o.div); });
+    }
+    if(!file){
+      loading.textContent='未指定文件'; return;
+    }
+    var pdf=null;
+    pdfjsLib.getDocument(file).promise.then(function(p){
+      pdf=p; loading.remove();
+      for(var i=1;i<=p.numPages;i++){
+        var d=document.createElement('div'); d.className='page';
+        var ph=document.createElement('div'); ph.className='ph'; ph.textContent='第 '+i+' 页';
+        d.appendChild(ph); wrap.appendChild(d);
+        pages.push({i:i,div:d,ph:ph,rendered:false});
+      }
+      pgEl.textContent='共 '+p.numPages+' 页';
+      buildObserver();
+    }).catch(function(err){
+      loading.innerHTML='<b>文档加载失败</b><br/>'+err.message;
+    });
+  })();
+  </script>
+</body>
+</html>
